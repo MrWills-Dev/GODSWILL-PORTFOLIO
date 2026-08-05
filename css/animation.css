@@ -1,0 +1,357 @@
+/* ===================================
+   FADE IN ANIMATION
+=================================== */
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+/* ===================================
+   FLOATING ANIMATION
+=================================== */
+
+@keyframes floating {
+
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+
+}
+
+/* ===================================
+   GLOW PULSE
+=================================== */
+
+@keyframes glowPulse {
+
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+}
+
+/* ===================================
+   SLIDE FROM LEFT
+=================================== */
+
+@keyframes slideLeft {
+
+    from {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+/* ===================================
+   SLIDE FROM RIGHT
+=================================== */
+
+@keyframes slideRight {
+
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+/* ===================================
+   HERO ANIMATIONS
+=================================== */
+
+.hero-content {
+    animation: slideLeft 1s ease;
+}
+
+.hero-image {
+    animation: slideRight 1s ease;
+}
+
+/* ===================================
+   HERO GLOW EFFECT
+=================================== */
+
+.hero-glow {
+    animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* ===================================
+   FLOATING IMAGE
+=================================== */
+
+.hero-image-wrapper {
+    animation: floating 5s ease-in-out infinite;
+}
+
+/* ===================================
+   BUTTON HOVER EFFECTS
+=================================== */
+
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+/* BUTTON SHINE */
+.btn::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+    );
+
+    transition: 0.6s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+/* ===================================
+   CARD HOVER EFFECTS
+=================================== */
+
+.about-card,
+.skill-card,
+.brand-card,
+.case-card,
+.testimonial-card,
+.stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+/* GOLD TOP BORDER EFFECT */
+.about-card::before,
+.skill-card::before,
+.brand-card::before,
+.case-card::before,
+.testimonial-card::before,
+.stat-card::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 0%;
+    height: 3px;
+
+    background: var(--gold-primary);
+
+    transition: 0.5s ease;
+}
+
+.about-card:hover::before,
+.skill-card:hover::before,
+.brand-card:hover::before,
+.case-card:hover::before,
+.testimonial-card:hover::before,
+.stat-card:hover::before {
+
+    width: 100%;
+}
+
+/* ===================================
+   IMAGE ZOOM EFFECT
+=================================== */
+
+.portfolio-card img {
+    transition: transform 0.6s ease;
+}
+
+.portfolio-card:hover img {
+    transform: scale(1.1);
+}
+
+/* ===================================
+   PORTFOLIO OVERLAY ANIMATION
+=================================== */
+
+.portfolio-overlay {
+    transform: translateY(20px);
+}
+
+.portfolio-card:hover .portfolio-overlay {
+    transform: translateY(0);
+}
+
+/* ===================================
+   NAVBAR TRANSITION
+=================================== */
+
+.header {
+    transition:
+        background 0.4s ease,
+        border-color 0.4s ease,
+        padding 0.4s ease;
+}
+
+/* ===================================
+   LINK HOVER TRANSITION
+=================================== */
+
+.nav-link {
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+}
+
+/* ===================================
+   SECTION REVEAL SYSTEM
+=================================== */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: 1s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===================================
+   STAGGER ANIMATION
+=================================== */
+
+.skills-grid .skill-card:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.skills-grid .skill-card:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.skills-grid .skill-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.skills-grid .skill-card:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.skills-grid .skill-card:nth-child(5) {
+    transition-delay: 0.5s;
+}
+
+.skills-grid .skill-card:nth-child(6) {
+    transition-delay: 0.6s;
+}
+
+/* ===================================
+   INPUT ANIMATIONS
+=================================== */
+
+.contact-form input,
+.contact-form textarea {
+    transition:
+        border-color 0.3s ease,
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+
+    transform: translateY(-3px);
+
+    background: #1f1f1f;
+}
+
+/* ===================================
+   SOCIAL LINK EFFECT
+=================================== */
+
+.footer-socials a,
+.footer-links a {
+    transition: 0.3s ease;
+}
+
+.footer-socials a:hover,
+.footer-links a:hover {
+
+    color: var(--gold-primary);
+
+    padding-left: 5px;
+}
+
+/* ===================================
+   SCROLLBAR STYLING
+=================================== */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold-primary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-soft);
+}
