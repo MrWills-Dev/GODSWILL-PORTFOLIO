@@ -1,0 +1,21 @@
+{
+  "name": "godswill-portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MrWills-Dev/GODSWILL-PORTFOLIO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MrWills-Dev/GODSWILL-PORTFOLIO/issues"
+  },
+  "homepage": "https://github.com/MrWills-Dev/GODSWILL-PORTFOLIO#readme"
+}

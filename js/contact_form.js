@@ -1,34 +1,44 @@
-const ACCESS_KEY = "8106c9cb-1dae-48ba-8321-dcce7cc6da2c"; //GET THIS FROM YOUR MAIL SENDER API PROVIDER(WEB3FORM.COM)
-
 document.getElementById('contact-form').addEventListener('submit', async function(e){
-e.preventDefault(); //this is what stops the the API page from showing.
+    e.preventDefault(); 
 
-const btn = document.getElementById('btn');
-const status = document.getElementById('status');
+    const btn = document.getElementById('btn');
+    const status = document.getElementById('status');
 
-btn.disabled = true;
-status.textContent = "sending...";
+    btn.disabled = true;
+    status.textContent = "Sending...";
 
-const formData = new FormData(this);
-formData.append("access_key", ACCESS_KEY);
-formData.append("subject", "New Portfolio Message");
-formData.append("from_name", "Portfolio website");
+    try {
+        const formData = new FormData(this);
+        
+        // Convert FormData into a standard JSON object for your backend handler
+        const formObject = Object.fromEntries(formData.entries());
+        formObject.subject = "New Portfolio Message";
+        formObject.from_name = "Portfolio website";
 
-try {const response = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    body: formData
+        
+        const res = await fetch('/api/send_mail', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formObject)
 });
 
-const result = await response.json();
+        
+        const result = await res.json();
 
-if (result.success) {
-    status.textContent = "Thank you for your message! I will reply soon.";
-    this.reset();
-}else{
-    status.textContent = "Failed" + result.message;
-}
-}catch (error){
-    status.textContent = "Network error. Try again.";
-} finally {
-    btn.disabled = false;
-}});
+        if (result.success) {
+            status.textContent = "Thank you for your message! I will reply soon.";
+            alert('Message sent successfully!');
+            this.reset(); 
+        } else {
+            status.textContent = "Failed: " + result.message;
+            alert('Error: ' + result.message);
+        }
+    } catch (error) {
+        status.textContent = "Network error. Try again.";
+        console.error(error);
+    } finally {
+        btn.disabled = false;
+    }
+});
