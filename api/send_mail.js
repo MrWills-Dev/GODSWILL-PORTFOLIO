@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({
             success: false,
-            message: "Method Not Allowed"
+            message: "Only POST requests are allowed."
         });
     }
 
@@ -15,6 +15,8 @@ export default async function handler(req, res) {
     }
 
     try {
+
+        const body = req.body || {};
 
         const response = await fetch(
             "https://api.web3forms.com/submit",
@@ -28,26 +30,29 @@ export default async function handler(req, res) {
 
                 body: JSON.stringify({
                     access_key: process.env.WEB3FORM_KEY,
-                    ...req.body
+
+                    name: body.name,
+                    email: body.email,
+                    message: body.message,
+
+                    subject: "New Portfolio Message"
                 })
             }
         );
 
         const data = await response.json();
 
+        console.log("Web3Forms response:", data);
+
         return res.status(response.status).json(data);
 
-    }
+    } catch (error) {
 
-    catch (error) {
-
-        console.error(error);
+        console.error("Server error:", error);
 
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: "Something went wrong while sending the message."
         });
-
     }
-
 }
