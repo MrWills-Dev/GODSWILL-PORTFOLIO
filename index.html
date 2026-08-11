@@ -847,7 +847,7 @@
                 </p>
 
                 <!-- CONTACT FORM -->
-                <form class="contact-form" id="contact-form">
+             <form id="contact-form" class="contact-form">
 
     <input
         type="text"
@@ -866,32 +866,16 @@
         placeholder="Your Message"
         required></textarea>
 
-    <!-- Disable CAPTCHA -->
-    <input
-        type="hidden"
-        name="_captcha"
-        value="false">
-
-    <!-- Email subject -->
-    <input
-        type="hidden"
-        name="_subject"
-        value="New Portfolio Contact Message">
-
-    <!-- Prevent spam bots -->
-    <input
-        type="text"
-        name="_honey"
-        style="display:none">
-
     <button
         type="submit"
-        class="btn btn-primary" id="btn">
+        id="btn"
+        class="btn btn-primary">
 
         Send Message
 
     </button>
-    <div id="status"></div>
+
+    <p id="status"></p>
 
 </form>
 
