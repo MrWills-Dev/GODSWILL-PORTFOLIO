@@ -10,46 +10,36 @@ if (form) {
         const status = document.getElementById("status");
 
         btn.disabled = true;
+
         status.textContent = "Sending...";
 
         try {
 
-            const formData = new FormData(this);
+            const formData = new FormData(form);
 
-            const formObject = Object.fromEntries(formData.entries());
+            const formObject =
+                Object.fromEntries(formData.entries());
+
+            console.log("Sending:", formObject);
 
             const res = await fetch("/api/send_mail", {
 
                 method: "POST",
 
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 },
 
                 body: JSON.stringify(formObject)
 
             });
 
-            /*
-             * Check whether Vercel actually returned JSON
-             */
-
-            const contentType = res.headers.get("content-type");
-
-            if (!contentType || !contentType.includes("application/json")) {
-
-                const text = await res.text();
-
-                console.error("Server returned:", text);
-
-                throw new Error(
-                    "The server returned HTML instead of JSON."
-                );
-            }
+            console.log("API status:", res.status);
 
             const result = await res.json();
 
-            console.log("Server response:", result);
+            console.log("API response:", result);
 
             if (result.success) {
 
@@ -58,21 +48,30 @@ if (form) {
 
                 alert("Message sent successfully!");
 
-                this.reset();
+                form.reset();
 
             } else {
 
                 status.textContent =
-                    "Failed: " + (result.message || "Unknown error.");
+                    "Failed: " +
+                    (result.message || "Unknown error.");
+
+                console.error(
+                    "Web3Forms error:",
+                    result
+                );
 
             }
 
         } catch (error) {
 
-            console.error("Contact form error:", error);
+            console.error(
+                "Contact form error:",
+                error
+            );
 
             status.textContent =
-                "Something went wrong. Please try again.";
+                "Something went wrong while sending the message.";
 
         } finally {
 
