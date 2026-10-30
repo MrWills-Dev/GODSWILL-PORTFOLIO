@@ -1,84 +1,56 @@
 const form = document.getElementById("contact-form");
 
 if (form) {
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-    form.addEventListener("submit", async function (e) {
+    const btn = document.getElementById("btn");
+    const status = document.getElementById("status");
 
-        e.preventDefault();
+    // Disable button + show loading
+    btn.disabled = true;
+    btn.textContent = "Sending...";
+    status.textContent = "";
+    status.className = "";
 
-        const btn = document.getElementById("btn");
-        const status = document.getElementById("status");
+    try {
+      const formData = new FormData(form);
+      const formObject = Object.fromEntries(formData.entries());
 
-        btn.disabled = true;
+      const res = await fetch("/api/send_mail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formObject),
+      });
 
-        status.textContent = "Sending...";
+      let result;
+      try {
+        result = await res.json();
+      } catch {
+        throw new Error("Server returned invalid response");
+      }
 
-        try {
-
-            const formData = new FormData(form);
-
-            const formObject =
-                Object.fromEntries(formData.entries());
-
-            console.log("Sending:", formObject);
-
-            const res = await fetch("/api/send_mail", {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-
-                body: JSON.stringify(formObject)
-
-            });
-
-            console.log("API status:", res.status);
-
-            const result = await res.json();
-
-            console.log("API response:", result);
-
-            if (result.success) {
-
-                status.textContent =
-                    "Thank you for your message! I will reply soon.";
-
-                alert("Message sent successfully!");
-
-                form.reset();
-
-            } else {
-
-                status.textContent =
-                    "Failed: " +
-                    (result.message || "Unknown error.");
-
-                console.error(
-                    "Web3Forms error:",
-                    result
-                );
-
-            }
-
-        } catch (error) {
-
-            console.error(
-                "Contact form error:",
-                error
-            );
-
-            status.textContent =
-                "Something went wrong while sending the message.";
-
-        } finally {
-
-            btn.disabled = false;
-
-        }
-
-    });
-
+      if (res.ok && result.success) {
+        status.textContent = "Message sent successfully! I’ll reply soon.";
+        status.className = "success";
+        form.reset();
+      } else {
+        status.textContent =
+          result.message || "Something went wrong. Please try again.";
+        status.className = "error";
+        console.error("API Error:", result);
+      }
+    } catch (error) {
+      console.error("Contact form error:", error);
+      status.textContent =
+        "Network error. Please check your connection or try WhatsApp.";
+      status.className = "error";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Send Message";
+    }
+  });
 }
